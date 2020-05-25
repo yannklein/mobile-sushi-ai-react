@@ -7,6 +7,19 @@ const instructions = Platform.select({
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
 
+const createFormData = (photo) => {
+  const data = new FormData();
+
+  data.append("file", {
+    name: photo.fileName,
+    type: photo.type,
+    uri:
+      Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+  });
+
+  return data;
+};
+
 export default class App extends React.Component {
 
   state = {
@@ -15,7 +28,7 @@ export default class App extends React.Component {
 
   handleChoosePhoto = () => {
     const options = {
-      noData: true,
+      // noData: true,
     }
     ImagePicker.launchImageLibrary(options, response => {
       if (response.uri) {
@@ -23,6 +36,33 @@ export default class App extends React.Component {
       }
     })
   }
+
+
+  handleUploadPhoto = () => {
+
+    const { photo } = this.state;
+
+    const imgFile = `${photo.data}`;
+    const imgData = new FormData();
+    imgData.append("file", imgFile);
+
+    console.log(imgFile);
+    fetch("http://localhost:5000/analyze", {
+      method: "POST",
+      body: imgData
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log("upload succes", response);
+        alert("Upload success!");
+        this.setState({ photo: null });
+      })
+      .catch(error => {
+        console.log("upload error", error);
+        alert("Upload failed!");
+      });
+  };
+
   render() {
     const { photo } = this.state
     return (
@@ -43,7 +83,7 @@ export default class App extends React.Component {
         <View>
 
         </View>
-        <Button style={styles.ask} title="Ask the AI" onPress={this.handleChoosePhoto} />
+        <Button style={styles.ask} title="Ask the AI" onPress={this.handleUploadPhoto} />
       </View>
     )
   }
