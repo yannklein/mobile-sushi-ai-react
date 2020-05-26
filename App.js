@@ -42,14 +42,9 @@ export default class App extends React.Component {
 
     const { photo } = this.state;
 
-    const imgFile = `${photo.data}`;
-    const imgData = new FormData();
-    imgData.append("file", imgFile);
-
-    console.log(imgFile);
     fetch("http://localhost:5000/analyze", {
       method: "POST",
-      body: imgData
+      body: createFormData(photo)
     })
       .then(response => response.json())
       .then(response => {
