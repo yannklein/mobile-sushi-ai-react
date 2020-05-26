@@ -28,7 +28,7 @@ export default class App extends React.Component {
 
   handleChoosePhoto = () => {
     const options = {
-      // noData: true,
+      noData: true,
     }
     ImagePicker.launchImageLibrary(options, response => {
       if (response.uri) {
