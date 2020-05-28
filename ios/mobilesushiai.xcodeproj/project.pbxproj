@@ -270,8 +270,8 @@
 			baseConfigurationReference = 3B47C5AFCB8BDE514B7D1AC6 /* Pods-mobilesushiai.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development: Yann KLEIN (9Q93T2FH3G)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development: Yann KLEIN (9Q93T2FH3G)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: Yann KLEIN (88GV3AGZBK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Yann KLEIN (88GV3AGZBK)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -284,9 +284,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.sushiai.-";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.sushiai.dev.sushiai.-";
 				PRODUCT_NAME = "Sushi AI";
-				PROVISIONING_PROFILE_SPECIFIER = "Sushi AI";
+				PROVISIONING_PROFILE_SPECIFIER = "Sushi AI Distribution";
+				TARGETED_DEVICE_FAMILY = 2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -296,7 +297,7 @@
 			baseConfigurationReference = 8AC623DBF3A3E2CB072F81F2 /* Pods-mobilesushiai.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development: Yann KLEIN (9Q93T2FH3G)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: Yann KLEIN (88GV3AGZBK)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 88GV3AGZBK;
@@ -308,9 +309,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.sushiai.-";
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.sushiai.dev.sushiai.-";
 				PRODUCT_NAME = "Sushi AI";
-				PROVISIONING_PROFILE_SPECIFIER = "Sushi AI";
+				PROVISIONING_PROFILE_SPECIFIER = "Sushi AI Distribution";
+				TARGETED_DEVICE_FAMILY = 2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
