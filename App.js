@@ -11,7 +11,7 @@ const createFormData = (photo) => {
   const data = new FormData();
 
   data.append("file", {
-    name: photo.fileName,
+    name: photo.fileName || "image.jpg",
     type: photo.type,
     uri:
       Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
@@ -20,21 +20,65 @@ const createFormData = (photo) => {
   return data;
 };
 
+const cloudinaryUpload = (photo) => {
+
+  console.log(photo);
+  const fromData = new FormData()
+  fromData.append('file', photo)
+  fromData.append('upload_preset', 'st4y3ops')
+  fromData.append("cloud_name", "yanninthesky")
+
+  fetch("https://api.cloudinary.com/v1_1/yanninthesky/upload", {
+      method: "post",
+      body: fromData
+    })
+    .then(res => res.json())
+    .then(dat => {
+      console.log("Upload okay!", dat)
+    })
+    .catch(err => {
+      console.log("An Error Occured While Uploading")
+    })
+};
+
 export default class App extends React.Component {
 
   state = {
     photo: null,
+    answer: {
+        result: "salomn",
+        details: {salmon: 32, tuna: 45, tamago: 43}
+      },
+    log: ""
   }
 
   handleChoosePhoto = () => {
     const options = {
-      noData: true,
+      title: 'Select Photo',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
     }
-    ImagePicker.launchImageLibrary(options, response => {
-      if (response.uri) {
-        this.setState({ photo: response })
+
+    ImagePicker.showImagePicker(options, (response) => {
+      // console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const uri = response.uri;
+        const type = response.type;
+        const name = response.fileName;
+        const source = {
+          uri,
+          type,
+          name,
+        }
+        this.setState({ photo: source})
       }
-    })
+    });
   }
 
 
@@ -42,24 +86,30 @@ export default class App extends React.Component {
 
     const { photo } = this.state;
 
-    fetch("http://localhost:5000/analyze", {
+    // cloudinaryUpload(photo);
+
+    fetch("https://yanns-ai.onrender.com/analyze", {
       method: "POST",
       body: createFormData(photo)
     })
       .then(response => response.json())
-      .then(response => {
-        console.log("upload succes", response);
-        alert("Upload success!");
-        this.setState({ photo: null });
+      .then(data => {
+        console.log("upload succes", data);
+        this.setState(
+          {
+            answer: data
+          }
+        );
       })
       .catch(error => {
         console.log("upload error", error);
-        alert("Upload failed!");
+        this.setState({log: error.toString()});
       });
   };
 
   render() {
-    const { photo } = this.state
+    const { photo, answer, log } = this.state;
+
     return (
       <View style={styles.container}>
         <View style={styles.uploadSection}>
@@ -75,8 +125,10 @@ export default class App extends React.Component {
             )}
           </View>
         </View>
-        <View>
-
+        <View style={styles.result}>
+          <Text style={styles.answer}> { (answer.result === "" ? '' : `That's... a ${answer.result} sushi!`) } </Text>
+          <Text style={styles.list}> { (answer.result === "" ? '' : Object.keys(answer.details).map(key => `${key[0].toUpperCase()}${key.substring(1)} sushi - ${answer.details[key]}%\n`).join('') ) } </Text>
+          <Text style={styles.parag}> { log } </Text>
         </View>
         <Button style={styles.ask} title="Ask the AI" onPress={this.handleUploadPhoto} />
       </View>
@@ -104,7 +156,20 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  result: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  answer: {
+    fontSize: 24,
+    margin: 24
+  },
+  list: {
+    color: '#333333',
+    marginBottom: 5
+  },
   ask: {
-
+    backgroundColor: '#FF4F64',
+    color: 'white'
   }
 });
