@@ -123,7 +123,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.uploadSection}>
-          <Text style={styles.title}> What's the sushi?! 🍣 </Text>
+          <Text style={styles.title}>What's the sushi?! 🍣</Text>
           <Text style={styles.parag}> What kind of <Text style={{fontWeight: "bold"}}>sushi</Text> are you eating? Let the AI guess! </Text>
           <TouchableOpacity style={styles.upload} onPress={this.handleChoosePhoto} >
             <Text style={styles.uploadText}>First, upload a sushi</Text>
@@ -153,7 +153,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 96,
+    marginTop: 40,
     justifyContent: 'space-between',
     alignItems: 'center'
   },
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    margin: 24,
+    marginVertical: 32,
     fontWeight: 'bold'
   },
   parag: {
@@ -174,21 +174,22 @@ const styles = StyleSheet.create({
   result: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 96
+    marginTop: 152
   },
   answer: {
     fontSize: 24,
-    margin: 24,
+    marginTop: 24,
+    marginBottom: 20,
     fontWeight: 'bold'
   },
   list: {
     color: '#333333',
-    marginBottom: 24
   },
   ask: {
     backgroundColor: '#FF4F64',
     width: '100%',
-    paddingVertical: 32,
+    paddingTop: 32,
+    paddingBottom: 40,
     margin: 0
   },
   askText: {

@@ -19,7 +19,7 @@
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		0731D3B524204D62009CAE85 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Expo.plist; path = mobilesushiai/Supporting/Expo.plist; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* mobilesushiai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mobilesushiai.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Sushi AI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sushi AI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = mobilesushiai/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = mobilesushiai/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* mobilesushiai.app */,
+				13B07F961A680F5B00A75B9A /* Sushi AI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,7 +132,7 @@
 			);
 			name = mobilesushiai;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* mobilesushiai.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Sushi AI.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -285,7 +285,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.sushiai.-";
-				PRODUCT_NAME = mobilesushiai;
+				PRODUCT_NAME = "Sushi AI";
 				PROVISIONING_PROFILE_SPECIFIER = "Sushi AI";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -309,7 +309,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.sushiai.-";
-				PRODUCT_NAME = mobilesushiai;
+				PRODUCT_NAME = "Sushi AI";
 				PROVISIONING_PROFILE_SPECIFIER = "Sushi AI";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
