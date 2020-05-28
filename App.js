@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Platform, StyleSheet, Text, View, Button, Image } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
 import ImagePicker from 'react-native-image-picker'
 
 const instructions = Platform.select({
@@ -46,10 +46,11 @@ export default class App extends React.Component {
   state = {
     photo: null,
     answer: {
-        result: "salomn",
-        details: {salmon: 32, tuna: 45, tamago: 43}
+        result: "",
+        details: {}
       },
-    log: ""
+    log: "",
+    askBtnText: "Ask the AI"
   }
 
   handleChoosePhoto = () => {
@@ -88,6 +89,9 @@ export default class App extends React.Component {
 
     // cloudinaryUpload(photo);
 
+    this.setState({askBtnText: "Analyzing..."});
+
+
     fetch("https://yanns-ai.onrender.com/analyze", {
       method: "POST",
       body: createFormData(photo)
@@ -97,26 +101,34 @@ export default class App extends React.Component {
         console.log("upload succes", data);
         this.setState(
           {
-            answer: data
+            answer: data,
+            askBtnText: "Ask the AI"
           }
         );
       })
       .catch(error => {
         console.log("upload error", error);
-        this.setState({log: error.toString()});
+        this.setState(
+          {
+            log: error.toString(),
+            askBtnText: "Ask the AI"
+          }
+        );
       });
   };
 
   render() {
-    const { photo, answer, log } = this.state;
+    const { photo, answer, log, askBtnText } = this.state;
 
     return (
       <View style={styles.container}>
         <View style={styles.uploadSection}>
           <Text style={styles.title}> What's the sushi?! 🍣 </Text>
-          <Text style={styles.parag}> What kind of sushi are you eating? Let the AI guess! </Text>
-          <Button title="Upload a sushi" onPress={this.handleChoosePhoto} />
-          <View>
+          <Text style={styles.parag}> What kind of <Text style={{fontWeight: "bold"}}>sushi</Text> are you eating? Let the AI guess! </Text>
+          <TouchableOpacity style={styles.upload} onPress={this.handleChoosePhoto} >
+            <Text style={styles.uploadText}>First, upload a sushi</Text>
+          </TouchableOpacity>
+          <View style={styles.photo}>
             {photo && (
               <Image
                 source={{ uri: photo.uri }}
@@ -126,11 +138,13 @@ export default class App extends React.Component {
           </View>
         </View>
         <View style={styles.result}>
-          <Text style={styles.answer}> { (answer.result === "" ? '' : `That's... a ${answer.result} sushi!`) } </Text>
-          <Text style={styles.list}> { (answer.result === "" ? '' : Object.keys(answer.details).map(key => `${key[0].toUpperCase()}${key.substring(1)} sushi - ${answer.details[key]}%\n`).join('') ) } </Text>
+          <Text style={styles.answer}> { (answer.result === "" ? '' : `That's a... ${answer.result[0].toUpperCase()}${answer.result.substring(1)} sushi!`) }</Text>
+          <Text style={styles.list}>{ (answer.result === "" ? '' : Object.keys(answer.details).map(key => `${key[0].toUpperCase()}${key.substring(1)} sushi - ${answer.details[key]}%\n`).join('') ) } </Text>
           <Text style={styles.parag}> { log } </Text>
         </View>
-        <Button style={styles.ask} title="Ask the AI" onPress={this.handleUploadPhoto} />
+        <TouchableOpacity style={styles.ask} onPress={this.handleUploadPhoto} >
+          <Text style={styles.askText} >{ askBtnText }</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -139,7 +153,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 64,
+    marginTop: 96,
     justifyContent: 'space-between',
     alignItems: 'center'
   },
@@ -149,27 +163,47 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    margin: 24
+    margin: 24,
+    fontWeight: 'bold'
   },
   parag: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: 24,
   },
   result: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 96
   },
   answer: {
     fontSize: 24,
-    margin: 24
+    margin: 24,
+    fontWeight: 'bold'
   },
   list: {
     color: '#333333',
-    marginBottom: 5
+    marginBottom: 24
   },
   ask: {
     backgroundColor: '#FF4F64',
-    color: 'white'
-  }
+    width: '100%',
+    paddingVertical: 32,
+    margin: 0
+  },
+  askText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 24,
+  },
+  upload: {
+    borderColor: '#FF4F64',
+    borderWidth: 1,
+    padding: 16,
+    marginBottom: 24
+  },
+  uploadText: {
+    textAlign: 'center',
+    color: '#FF4F64',
+  },
 });
